@@ -351,7 +351,7 @@ export default function SemiAutoPanel({
           ) : currentRoom ? (
             <div className="sa-compact-room-name-wrapper" style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
               {currentRoom.provider === 'pragmatic' && (
-                <span className="room-card__provider pragmatic" style={{ margin: 0, padding: '1px 5px', fontSize: '10px' }}>P</span>
+                <span className="sa-provider-badge pragmatic">P</span>
               )}
               <span className="sa-compact-room-name">{currentRoom.name}</span>
             </div>

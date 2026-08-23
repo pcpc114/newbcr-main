@@ -240,6 +240,25 @@
   color: var(--text-primary);
 }
 
+/* Pragmatic 방 표시 배지("P").
+   이전에는 PredictModePanel/components/RoomCard.css 의 `.room-card__provider` 를
+   빌려 썼는데, PredictModePanel 은 어디에서도 렌더링되지 않아 그 CSS 가 번들에
+   포함되지 않는다 → 배지가 스타일 없이 맨 텍스트로 렌더링되고 있었다.
+   SemiAutoPanel 소유 클래스로 옮겨 자립시킨다. */
+.sa-provider-badge {
+  flex-shrink: 0;
+  margin: 0;
+  padding: 1px 5px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.sa-provider-badge.pragmatic {
+  background: rgba(255, 152, 0, 0.15);
+  color: var(--status-warning, #4593fc);
+}
+
 .sa-compact-room-empty {
   font-size: var(--fs-caption);
   color: var(--text-tertiary);
