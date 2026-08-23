@@ -1,0 +1,201 @@
+/* SettingsDialogFrame.css — shared chrome for settings dialogs.
+ * Chrome dimensions come from --dialog-* tokens in global.css, shared with
+ * Modal.css. Visuals (z-index, no glow, transition-based animation) are local. */
+
+.settings-dialog-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.settings-dialog-overlay.visible { opacity: 1; }
+
+.settings-dialog {
+  width: min(720px, 92vw);
+  max-height: var(--dialog-max-height);
+  background: var(--modal-bg);
+  border: 1px solid var(--modal-border);
+  border-radius: var(--radius-xl);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transform: scale(0.92);
+  opacity: 0;
+  transition: var(--transition-smooth);
+  box-shadow: var(--shadow-modal);
+}
+.settings-dialog.visible { transform: scale(1); opacity: 1; }
+
+.settings-dialog-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--dialog-chrome-padding);
+  border-bottom: 1px solid var(--modal-border);
+}
+.settings-dialog-header h2 {
+  margin: 0;
+  font-size: var(--dialog-title-size);
+  font-weight: var(--dialog-title-weight);
+  color: var(--text-primary);
+}
+.settings-dialog-close {
+  width: var(--dialog-close-size);
+  height: var(--dialog-close-size);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--dialog-close-radius);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+.settings-dialog-close:hover {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+  border-color: var(--modal-border);
+}
+
+.settings-dialog-tabs {
+  display: flex;
+  border-bottom: 1px solid var(--modal-border);
+  background: var(--modal-surface);
+}
+.settings-tab {
+  flex: 1;
+  padding: 13px 16px;
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-lg);
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: color 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+}
+.settings-tab:hover { color: var(--text-primary); background: var(--bg-hover); }
+.settings-tab.active {
+  color: var(--accent-primary);
+  border-bottom-color: var(--accent-primary);
+}
+
+.settings-dialog-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--dialog-content-padding);
+}
+
+.settings-dialog-footer {
+  padding: var(--dialog-chrome-padding);
+  border-top: 1px solid var(--modal-border);
+  background: var(--modal-surface);
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+/* Shared two-column field row — used by both AutoMode and SemiAuto settings.
+ * Collapses to a single column under 480px to keep dialogs usable in narrow modes. */
+.settings-field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+@media (max-width: 480px) {
+  .settings-field-row {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+}
+
+/* Shared section heading — small uppercase accent label. */
+.settings-section-title {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--accent-primary);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin: 0 0 8px 0;
+}
+
+/* Shared field primitive (NumberFieldWithSuffix) */
+.settings-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+}
+.settings-field__label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+.settings-field__input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.settings-field__input {
+  width: 100%;
+  padding: 9px 38px 9px 12px;
+  background: var(--modal-surface);
+  border: 1px solid var(--modal-border);
+  border-radius: 8px;
+  color: var(--text-primary);
+  font-size: 13px;
+  font-family: var(--font-mono, monospace);
+}
+.settings-field__input:focus {
+  outline: none;
+  border-color: var(--accent-primary);
+}
+.settings-field__suffix {
+  position: absolute;
+  right: 10px;
+  font-size: 12px;
+  color: var(--text-muted);
+  pointer-events: none;
+}
+
+/* Shared stat card primitive (StatCard) */
+.settings-stat-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+.settings-stat-card {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 10px 12px;
+  background: var(--modal-surface);
+  border: 1px solid var(--modal-border);
+  border-radius: 8px;
+}
+.settings-stat-card__label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+.settings-stat-card__value {
+  font-size: 18px;
+  font-family: var(--font-mono, monospace);
+  color: var(--text-primary);
+}
+.settings-stat-card.positive .settings-stat-card__value { color: var(--status-success); }
+.settings-stat-card.negative .settings-stat-card__value { color: var(--status-danger); }
+.settings-stat-card__wins   { color: var(--status-success); }
+.settings-stat-card__losses { color: var(--status-danger); }
+.settings-stat-card__sep    { color: var(--text-muted); margin: 0 4px; }

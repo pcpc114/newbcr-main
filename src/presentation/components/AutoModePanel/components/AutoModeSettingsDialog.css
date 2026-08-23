@@ -1,0 +1,457 @@
+/* AutoModeSettingsDialog.css - Premium Casino Design */
+/* Matches SemiAutoSettingsDialog style */
+/* NOTE: overlay/dialog/header/tabs/content/footer chrome lives in SettingsDialogFrame.css */
+
+/* Section */
+.ams-section {
+  margin-bottom: 24px;
+}
+
+.ams-section:last-child {
+  margin-bottom: 0;
+}
+
+.ams-section-title {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--accent-primary);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin: 0 0 12px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Mode Toggle */
+.ams-mode-toggle {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.ams-mode-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 12px;
+  background: var(--modal-elevated);
+  border: 1px solid var(--modal-border);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: var(--transition-smooth);
+}
+
+.ams-mode-btn:hover {
+  background: var(--bg-hover);
+  border-color: var(--border-subtle);
+}
+
+.ams-mode-btn.active {
+  background: var(--accent-primary-bg);
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 1px var(--accent-primary);
+}
+
+.ams-mode-btn.real.active {
+  background: var(--status-danger-bg);
+  border-color: var(--status-danger);
+  box-shadow: 0 0 0 1px var(--status-danger);
+}
+
+.ams-mode-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.ams-mode-btn.active .ams-mode-label {
+  color: var(--accent-primary);
+}
+
+.ams-mode-btn.real.active .ams-mode-label {
+  color: var(--status-danger);
+}
+
+.ams-mode-desc {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.ams-warning {
+  margin-top: 12px;
+  padding: 12px 14px;
+  background: var(--status-danger-bg);
+  border: 1px solid var(--status-danger);
+  border-radius: var(--radius-md);
+  color: var(--status-danger);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.5;
+  text-align: center;
+}
+
+/* Strategy Grid */
+.ams-strategy-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.ams-strategy-owner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+  padding: 16px;
+  border: 1px solid color-mix(in srgb, var(--accent-primary) 60%, transparent);
+  border-left-width: 4px;
+  border-radius: var(--radius-md);
+  background: color-mix(in srgb, var(--accent-primary) 10%, var(--modal-elevated));
+}
+
+.ams-strategy-owner > div {
+  min-width: 0;
+}
+
+.ams-strategy-owner__eyebrow {
+  display: block;
+  margin-bottom: 5px;
+  color: var(--accent-primary);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.ams-strategy-owner strong {
+  display: block;
+  color: var(--text-primary);
+  font-size: 15px;
+}
+
+.ams-strategy-owner p {
+  margin: 6px 0 0;
+  color: var(--text-secondary);
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.ams-strategy-owner button {
+  flex: 0 0 auto;
+  min-height: 38px;
+  padding: 0 14px;
+  border: 1px solid var(--accent-primary);
+  border-radius: var(--radius-md);
+  background: var(--accent-primary);
+  color: var(--text-on-accent);
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.ams-strategy-fieldset {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.ams-strategy-fieldset:disabled {
+  opacity: 0.48;
+}
+
+.ams-strategy-fieldset:disabled .ams-strategy-btn,
+.ams-strategy-fieldset:disabled input,
+.ams-strategy-fieldset:disabled button {
+  cursor: not-allowed;
+}
+
+.ams-strategy-fieldset__note {
+  margin: 0 0 12px;
+  color: var(--text-secondary);
+  font-size: 12px;
+}
+
+.ams-strategy-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 12px;
+  background: var(--modal-elevated);
+  border: 1px solid var(--modal-border);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: var(--transition-smooth);
+}
+
+.ams-strategy-btn:hover {
+  background: var(--bg-hover);
+  border-color: var(--border-subtle);
+}
+
+.ams-strategy-btn.active {
+  background: var(--accent-primary-bg);
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 1px var(--accent-primary);
+}
+
+.ams-strategy-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.ams-strategy-btn.active .ams-strategy-label {
+  color: var(--accent-primary);
+}
+
+.ams-strategy-desc {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.ams-strategy-btn.active .ams-strategy-desc {
+  color: var(--text-secondary);
+}
+
+/* Input Row & Group */
+/* NOTE: .ams-input-row moved to SettingsDialogFrame.css as .settings-field-row */
+
+.ams-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Preview */
+.ams-preview {
+  padding: 14px;
+  background: var(--bg-surface);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--modal-border);
+}
+
+.ams-preview-steps {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.ams-preview-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 8px 12px;
+  background: var(--modal-elevated);
+  border-radius: var(--radius-sm);
+  min-width: 72px;
+}
+
+.ams-preview-level {
+  font-size: 10px;
+  color: var(--text-muted);
+  margin-bottom: 2px;
+}
+
+.ams-preview-amount {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+}
+
+.ams-preview-total {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--modal-border);
+  font-size: 13px;
+  color: var(--text-secondary);
+  text-align: right;
+}
+
+.ams-preview-total strong {
+  color: var(--accent-primary);
+  font-family: var(--font-mono);
+}
+
+/* Hint */
+.ams-hint {
+  margin-top: 8px;
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+/* Buttons */
+.ams-btn-outline {
+  padding: 12px 16px;
+  background: var(--modal-elevated);
+  border: 1px solid var(--modal-border);
+  border-radius: var(--radius-md);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: var(--transition-smooth);
+}
+
+.ams-btn-outline:hover {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+  border-color: var(--border-subtle);
+}
+
+/* Outline Danger variant */
+.ams-btn-outline.ams-btn-danger {
+  background: var(--status-danger-bg);
+  border-color: var(--status-danger);
+  color: var(--status-danger);
+}
+
+.ams-btn-outline.ams-btn-danger:hover {
+  background: var(--status-danger-bg);
+  border-color: var(--status-danger);
+  opacity: 0.8;
+}
+
+/* Data Actions Container */
+.ams-data-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.ams-data-actions .ams-btn-outline {
+  flex: 1;
+  min-width: 120px;
+}
+
+.ams-btn-danger {
+  padding: 12px 16px;
+  background: var(--status-danger-bg);
+  border: 1px solid var(--status-danger);
+  border-radius: var(--radius-md);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--status-danger);
+  cursor: pointer;
+  transition: var(--transition-smooth);
+}
+
+.ams-btn-danger:hover {
+  background: var(--status-danger-bg);
+  opacity: 0.8;
+}
+
+/* Small Button */
+.ams-btn-small {
+  padding: 6px 10px;
+  background: var(--modal-elevated);
+  border: 1px solid var(--modal-border);
+  border-radius: var(--radius-sm);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: var(--transition-smooth);
+}
+
+.ams-btn-small:hover {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+  border-color: var(--border-subtle);
+}
+
+/* Virtual Balance Display */
+.ams-virtual-balance-display {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  background: var(--modal-elevated);
+  border: 1px solid var(--modal-border);
+  border-radius: var(--radius-md);
+  font-size: 14px;
+  font-weight: 700;
+  font-family: var(--font-mono);
+}
+
+.ams-virtual-balance-display .positive {
+  color: var(--status-success);
+}
+
+.ams-virtual-balance-display .negative {
+  color: var(--status-danger);
+}
+
+/* Primary Footer Button (rendered inside SettingsDialogFrame's footer slot) */
+.ams-btn-primary {
+  width: 100%;
+  padding: 14px;
+  background: var(--accent-primary);
+  border: none;
+  border-radius: var(--radius-lg);
+  color: var(--text-on-accent);
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  box-shadow: var(--shadow-glow-accent);
+}
+
+.ams-btn-primary:hover {
+  background: var(--accent-secondary);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-glow-accent);
+}
+
+.ams-btn-primary:active {
+  transform: translateY(0);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════════════════════════════════ */
+
+@media (max-width: 480px) {
+  .ams-strategy-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .ams-strategy-owner {
+    align-items: stretch;
+    flex-direction: column;
+  }
+}
+
+/* Toggle Row */
+.ams-toggle-row {
+  display: flex;
+  align-items: center;
+}
+
+.ams-toggle-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.ams-toggle-label input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--accent-primary);
+  cursor: pointer;
+}
+
+.ams-toggle-text {
+  font-size: 14px;
+  color: var(--text-primary);
+}

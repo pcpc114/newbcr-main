@@ -1,0 +1,57 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+src-tauri/target/
+src-tauri/gen/
+
+# IDE
+.idea/
+.vscode/
+.claude/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Logs
+*.log
+*.jsonl
+npm-debug.log*
+.bet-capture/
+
+# Tauri
+src-tauri/WixTools/
+src-tauri/config.local.json
+
+# SMH
+.smh/
+
+# Test coverage
+coverage/
+
+# Caches
+.smart-code-cache/
+.omc/
+.omx/
+.superpowers/
+.forge/
+
+# Local plans / scratch
+PLAN.md
+plan.md
+
+# Installers / binaries
+*.exe
+key
+
+# Git worktrees
+.worktrees/

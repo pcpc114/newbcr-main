@@ -1,0 +1,304 @@
+/* FilterSettingsDialog — minimal layout. Chrome lives in SettingsDialogFrame.css. */
+
+/* "한 번 누르면 끝" 카드 — 어르신 사용자를 위한 prominent 진입점 */
+.filter-settings__quick {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 16px 18px;
+  margin-bottom: 24px;
+  background: var(--modal-elevated);
+  border: 1px solid var(--modal-border);
+  border-radius: var(--radius-lg);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.filter-settings__quick.is-on {
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 1px var(--accent-primary), var(--shadow-glow-accent);
+}
+
+.filter-settings__quick-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.filter-settings__quick-title {
+  margin: 0 0 4px 0;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.filter-settings__quick-desc {
+  margin: 0;
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.filter-settings__quick-desc strong {
+  color: var(--accent-primary);
+  font-weight: 700;
+}
+
+.filter-settings__quick-btn {
+  flex-shrink: 0;
+  min-width: 84px;
+  padding: 10px 18px;
+  background: var(--modal-bg);
+  border: 1px solid var(--modal-border);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease, transform 0.1s ease;
+}
+
+.filter-settings__quick-btn:hover {
+  background: var(--bg-hover);
+  border-color: var(--accent-primary);
+  transform: translateY(-1px);
+}
+
+.filter-settings__quick-btn:active {
+  transform: translateY(0);
+}
+
+.filter-settings__quick-btn.is-on {
+  background: var(--accent-primary);
+  border-color: var(--accent-primary);
+  color: var(--text-on-accent);
+}
+
+.filter-settings__quick-btn.is-on:hover {
+  background: var(--accent-secondary);
+  border-color: var(--accent-secondary);
+}
+
+.filter-settings__quick-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 10px 12px;
+  background: var(--modal-bg);
+  border: 1px solid var(--modal-border);
+  border-radius: var(--radius-md);
+  font-size: 14px;
+  color: var(--text-primary);
+}
+
+.filter-settings__quick-row-label {
+  font-weight: 500;
+}
+
+.filter-settings__quick-row-hint {
+  color: var(--text-muted);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.filter-settings__quick-count,
+.filter-settings__quick-amount {
+  padding: 6px 10px;
+  background: var(--modal-elevated);
+  border: 1px solid var(--accent-primary);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  font-size: 16px;
+  font-weight: 700;
+  font-family: var(--font-mono);
+  text-align: center;
+  -moz-appearance: textfield;
+}
+
+.filter-settings__quick-count { width: 56px; }
+.filter-settings__quick-amount { width: 100px; }
+
+.filter-settings__strategy-select {
+  min-width: 220px;
+  height: 32px;
+  padding: 0 10px;
+  border: 1px solid var(--modal-border);
+  border-radius: var(--radius-sm);
+  background: var(--modal-elevated);
+  color: var(--text-primary);
+  font-size: 12px;
+}
+
+.filter-settings__strategy-select:focus {
+  outline: none;
+  border-color: var(--accent-primary);
+}
+
+.filter-settings__strategy-quick {
+  margin-top: 12px;
+}
+
+.filter-settings__quick-count::-webkit-outer-spin-button,
+.filter-settings__quick-count::-webkit-inner-spin-button,
+.filter-settings__quick-amount::-webkit-outer-spin-button,
+.filter-settings__quick-amount::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.filter-settings__quick-count:focus,
+.filter-settings__quick-amount:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--accent-muted);
+}
+
+.filter-settings__quick-status {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.filter-settings__quick.is-on .filter-settings__quick-status {
+  color: var(--status-success);
+  font-weight: 600;
+}
+
+.filter-settings__quick-warning {
+  padding: 8px 10px;
+  background: rgba(255, 152, 0, 0.12);
+  border: 1px solid rgba(255, 152, 0, 0.3);
+  border-radius: var(--radius-sm);
+  color: var(--status-warning);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.filter-settings__section {
+  margin-bottom: 24px;
+}
+
+.filter-settings__section:last-child {
+  margin-bottom: 0;
+}
+
+/* .settings-section-title lives in SettingsDialogFrame.css (shared). */
+
+.filter-settings__hint {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin: 0 0 12px 0;
+}
+
+.filter-settings__filter-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.filter-settings__filter-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  background: var(--modal-elevated);
+  border: 1px solid var(--modal-border);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.filter-settings__filter-row:hover {
+  background: var(--bg-hover);
+  border-color: var(--border-subtle);
+}
+
+.filter-settings__filter-row input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--accent-primary);
+  cursor: pointer;
+}
+
+.filter-settings__filter-label {
+  flex: 1;
+  font-size: 14px;
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.filter-settings__filter-count {
+  font-size: 11px;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  background: var(--modal-bg);
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  min-width: 28px;
+  text-align: center;
+}
+
+.filter-settings__detail-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.filter-settings__detail-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 12px;
+  background: var(--modal-elevated);
+  border: 1px solid var(--modal-border);
+  border-radius: var(--radius-md);
+}
+
+.filter-settings__detail-name {
+  font-size: 13px;
+  color: var(--text-primary);
+  font-weight: 500;
+  flex: 1;
+  min-width: 0;
+}
+
+.filter-settings__detail-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.filter-settings__patterns-btn {
+  width: 100%;
+  padding: 12px;
+  background: var(--modal-elevated);
+  border: 1px solid var(--modal-border);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.filter-settings__patterns-btn:hover {
+  background: var(--bg-hover);
+  border-color: var(--border-subtle);
+}
+
+/* Footer 확인 button uses the global .btn-primary class. */
+
+@media (max-width: 480px) {
+  .filter-settings__detail-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .filter-settings__detail-controls {
+    justify-content: flex-start;
+  }
+}
