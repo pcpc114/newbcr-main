@@ -1,4 +1,4 @@
-.room-card {
+.predict-room-card {
   position: relative;
   display: flex;
   flex-direction: column;
@@ -31,37 +31,37 @@
   height: 100%;
 }
 
-.room-card:hover {
+.predict-room-card:hover {
   background: var(--bg-elevated);
   border-color: rgba(49, 130, 246, 0.35);
   transform: translateY(-2px);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(49, 130, 246, 0.15);
 }
 
-.room-card.selected {
+.predict-room-card.selected {
   border-color: var(--gold);
   border-width: 2px;
   background: linear-gradient(180deg, rgba(49, 130, 246, 0.1) 0%, var(--bg-card) 100%);
   box-shadow: 0 0 0 1px var(--gold), 0 8px 24px rgba(49, 130, 246, 0.2);
 }
 
-.room-card.predict-b {
+.predict-room-card.predict-b {
   border-left: 4px solid var(--red);
 }
 
-.room-card.predict-b:hover {
+.predict-room-card.predict-b:hover {
   box-shadow: 0 0 0 1px var(--red-dim), 0 12px 28px rgba(240, 68, 82, 0.2);
 }
 
-.room-card.predict-p {
+.predict-room-card.predict-p {
   border-left: 4px solid var(--blue);
 }
 
-.room-card.predict-p:hover {
+.predict-room-card.predict-p:hover {
   box-shadow: 0 0 0 1px var(--blue-dim), 0 12px 28px rgba(49, 130, 246, 0.2);
 }
 
-.room-card.flashing {
+.predict-room-card.flashing {
   animation: cardFlash 0.7s ease-out;
 }
 
@@ -76,7 +76,7 @@
   }
 }
 
-.room-card__left {
+.predict-room-card__left {
   position: relative;
   z-index: 1;
   flex: 1;
@@ -85,7 +85,7 @@
   gap: 8px;
 }
 
-.room-card__center {
+.predict-room-card__center {
   position: relative;
   z-index: 2;
   display: flex;
@@ -100,7 +100,7 @@
   padding: 16px 18px;
 }
 
-.room-card__right {
+.predict-room-card__right {
   position: relative;
   z-index: 1;
   display: grid;
@@ -109,19 +109,19 @@
   padding-top: 6px;
 }
 
-.room-card__right .room-stat-item:nth-child(1) {
+.predict-room-card__right .room-stat-item:nth-child(1) {
   justify-self: start;
 }
 
-.room-card__right .room-stat-item:nth-child(2) {
+.predict-room-card__right .room-stat-item:nth-child(2) {
   justify-self: center;
 }
 
-.room-card__right .room-stat-item:nth-child(3) {
+.predict-room-card__right .room-stat-item:nth-child(3) {
   justify-self: end;
 }
 
-.room-card__name {
+.predict-room-card__name {
   font-family: var(--font-display);
   font-size: 16px;
   font-weight: 700;
@@ -133,7 +133,12 @@
   min-width: 0;
 }
 
-.room-card__provider {
+/* 현재 이 화면(PredictModePanel)에서는 아직 사용하지 않는다.
+   과거 SemiAutoPanel 이 이 클래스를 빌려 썼는데, 이 파일은 PredictModePanel 이
+   렌더링되지 않는 동안 번들에 포함되지 않아 배지가 스타일 없이 나왔다.
+   SemiAutoPanel 은 자체 `.sa-provider-badge` 로 이관 완료. 이 규칙은 이 화면을
+   되살릴 때 쓰도록 남겨둔다. */
+.predict-room-card__provider {
   font-size: 10px;
   font-weight: 800;
   padding: 3px 6px;
@@ -143,7 +148,7 @@
   flex-shrink: 0;
 }
 
-.room-card__provider.pragmatic {
+.predict-room-card__provider.pragmatic {
   background: rgba(255, 152, 0, 0.15);
   color: var(--status-warning, #4593fc);
 }
@@ -211,7 +216,7 @@
   background: var(--green);
 }
 
-.room-card__prediction-large {
+.predict-room-card__prediction-large {
   font-family: var(--font-display);
   font-size: 26px;
   font-weight: 700;
@@ -219,17 +224,17 @@
   text-transform: uppercase;
 }
 
-.room-card__prediction-large.b {
+.predict-room-card__prediction-large.b {
   color: var(--red-bright);
   text-shadow: 0 2px 20px rgba(240, 68, 82, 0.4);
 }
 
-.room-card__prediction-large.p {
+.predict-room-card__prediction-large.p {
   color: var(--blue-bright);
   text-shadow: 0 2px 20px rgba(49, 130, 246, 0.4);
 }
 
-.room-card__prediction-large.analyzing {
+.predict-room-card__prediction-large.analyzing {
   color: var(--text-muted);
   font-size: 11px;
   font-weight: 700;
@@ -240,7 +245,7 @@
   opacity: 0.5;
 }
 
-.room-card__prediction-large.analyzing .dot {
+.predict-room-card__prediction-large.analyzing .dot {
   width: 4px;
   height: 4px;
   border-radius: 50%;
@@ -328,7 +333,7 @@
   margin: 0 2px;
 }
 
-.room-card__martin-badge {
+.predict-room-card__martin-badge {
   font-size: 11px;
   font-weight: 900;
   padding: 3px 8px;
@@ -339,7 +344,7 @@
   box-shadow: 0 0 12px rgba(49, 130, 246, 0.4);
 }
 
-.room-card__martin-badge.danger {
+.predict-room-card__martin-badge.danger {
   background: var(--red-bright);
   color: #fff;
   box-shadow: 0 0 15px rgba(240, 68, 82, 0.5);
@@ -357,7 +362,7 @@
   }
 }
 
-.room-card__timer {
+.predict-room-card__timer {
   display: inline-flex;
   align-items: center;
   gap: 3px;
@@ -373,11 +378,11 @@
   white-space: nowrap;
 }
 
-.room-card__timer svg {
+.predict-room-card__timer svg {
   flex-shrink: 0;
 }
 
-.room-card__shoe-badge {
+.predict-room-card__shoe-badge {
   display: inline-flex;
   align-items: center;
   gap: 3px;
@@ -406,7 +411,7 @@
   }
 }
 
-.room-card__result {
+.predict-room-card__result {
   position: absolute;
   top: 12px;
   right: 12px;
@@ -420,18 +425,18 @@
   animation: resultPop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-.room-card__result svg {
+.predict-room-card__result svg {
   width: 20px;
   height: 20px;
 }
 
-.room-card__result.correct {
+.predict-room-card__result.correct {
   background: var(--green);
   color: #fff;
   box-shadow: 0 4px 12px rgba(34, 197, 94, 0.4);
 }
 
-.room-card__result.incorrect {
+.predict-room-card__result.incorrect {
   background: var(--red);
   color: #fff;
   box-shadow: 0 4px 12px rgba(240, 68, 82, 0.4);

@@ -131,7 +131,7 @@ export const SelectedRoomDetail = memo(function SelectedRoomDetail({ room, state
                 <button className={road.roadView === 'one' ? 'active' : ''} onClick={() => road.toggleRoadView('one')}>원매</button>
               </div>
               {road.patternLabel && (
-                <span className="room-card__martin-badge">{road.patternLabel}</span>
+                <span className="predict-room-card__martin-badge">{road.patternLabel}</span>
               )}
             </div>
           </div>

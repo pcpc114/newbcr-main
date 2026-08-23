@@ -49,7 +49,7 @@ export const RoomCard = memo(function RoomCard({
 
   const renderPrediction = () => {
     if (!showPrediction) return (
-      <div className="room-card__prediction-large analyzing anim-pulse">
+      <div className="predict-room-card__prediction-large analyzing anim-pulse">
         <span className="dot"></span>
         분석 중...
       </div>
@@ -57,14 +57,14 @@ export const RoomCard = memo(function RoomCard({
 
     if (prediction || state?.lastPrediction?.isSkip) {
       return (
-        <div className="room-card__prediction-large anim-fade-in">
+        <div className="predict-room-card__prediction-large anim-fade-in">
           <PredictionIcon prediction={prediction} size="md" isSkip={state?.lastPrediction?.isSkip} />
         </div>
       )
     }
 
     return (
-      <div className="room-card__prediction-large analyzing anim-pulse">
+      <div className="predict-room-card__prediction-large analyzing anim-pulse">
         <span className="dot"></span>
         분석 중...
       </div>
@@ -73,24 +73,24 @@ export const RoomCard = memo(function RoomCard({
 
   return (
     <button
-      className={`room-card ${isSelected ? 'selected' : ''} ${isFlashing ? 'flashing' : ''} ${isHot ? 'is-hot' : ''} ${prediction && showPrediction ? `predict-${prediction.toLowerCase()}` : ''}`}
+      className={`predict-room-card ${isSelected ? 'selected' : ''} ${isFlashing ? 'flashing' : ''} ${isHot ? 'is-hot' : ''} ${prediction && showPrediction ? `predict-${prediction.toLowerCase()}` : ''}`}
       onClick={onClick}
     >
       <SparklineGraph history={predictionRecords} />
-      <div className="room-card__left">
-        <div className="room-card__name">
+      <div className="predict-room-card__left">
+        <div className="predict-room-card__name">
           <div className="live-indicator">
             <span className="live-dot"></span>
             라이브
           </div>
           <span className="room-name-text">{room.koreanName || room.name}</span>
           {martingaleLevel !== undefined && martingaleLevel > 0 && (
-            <span className={`room-card__martin-badge ${martingaleLevel >= 3 ? 'danger' : ''}`}>
+            <span className={`predict-room-card__martin-badge ${martingaleLevel >= 3 ? 'danger' : ''}`}>
               {martingaleLevel}M
             </span>
           )}
           {typeof timerSeconds === 'number' && timerSeconds > 0 && (
-            <span className="room-card__timer">
+            <span className="predict-room-card__timer">
               <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                 <circle cx="12" cy="12" r="10" /><path d="M12 6v6l4 2" />
               </svg>
@@ -98,17 +98,17 @@ export const RoomCard = memo(function RoomCard({
             </span>
           )}
           {isShoeChange && (
-            <span className="room-card__shoe-badge">🔄 NEW</span>
+            <span className="predict-room-card__shoe-badge">🔄 NEW</span>
           )}
         </div>
         <MiniRoadmap history={room.history} />
       </div>
 
-      <div className="room-card__center">
+      <div className="predict-room-card__center">
         {renderPrediction()}
       </div>
 
-      <div className="room-card__right">
+      <div className="predict-room-card__right">
         <div className="room-stat-item">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" />
@@ -138,7 +138,7 @@ export const RoomCard = memo(function RoomCard({
       </div>
 
       {lastResult !== undefined && (
-        <div className={`room-card__result ${lastResult ? 'correct' : 'incorrect'}`}>
+        <div className={`predict-room-card__result ${lastResult ? 'correct' : 'incorrect'}`}>
           {lastResult ? (
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
               <polyline points="20 6 9 17 4 12" />
