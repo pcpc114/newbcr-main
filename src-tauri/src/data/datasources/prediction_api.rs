@@ -22,16 +22,26 @@ pub struct PredictionApiConfig {
     pub auth_token: Option<String>,
     /// 요청 타임아웃 (초)
     pub timeout_secs: u64,
+    /// Supabase 게이트웨이용 공개 API 키 (`apikey` 헤더).
+    ///
+    /// Supabase Edge Function 은 함수 코드에 도달하기 전에 게이트웨이가 `apikey` 를 검사한다.
+    /// (함수의 `Verify JWT` 를 꺼도 이 검사는 남는다. 확인: apikey 없이 요청하면
+    ///  `401 {"code":"INVALID_CREDENTIALS"}`, 잘못된 apikey 면 401 빈 본문.)
+    ///
+    /// 이 키는 클라이언트에 배포되도록 설계된 **공개 키**(publishable / anon)다. 비밀이 아니다.
+    /// DB 접근 권한은 RLS 가 통제하며, 여기서는 게이트웨이 통과용으로만 쓴다.
+    pub api_key: Option<String>,
 }
 
 impl Default for PredictionApiConfig {
     fn default() -> Self {
         Self {
             base_url: option_env!("BCR_API_BASE_URL")
-                .unwrap_or("https://twxzryfkzbmwfbwwzdsh.supabase.co/functions/v1")
+                .unwrap_or("https://vthqlfcuspqmuvazfncf.supabase.co/functions/v1")
                 .to_string(),
             auth_token: None,
             timeout_secs: 30,
+            api_key: option_env!("BCR_API_ANON_KEY").map(|s| s.to_string()),
         }
     }
 }
@@ -552,6 +562,21 @@ impl PredictionApi {
             header::CONTENT_TYPE,
             header::HeaderValue::from_static("application/json"),
         );
+
+        // Supabase 게이트웨이는 함수 코드 실행 전에 `apikey` 를 확인한다.
+        // 기본 헤더에 한 번 넣어두면 모든 엔드포인트 요청에 자동으로 붙는다.
+        if let Some(ref key) = config.api_key {
+            match header::HeaderValue::from_str(key) {
+                Ok(value) => {
+                    headers.insert("apikey", value);
+                }
+                Err(e) => {
+                    warn!("⚠️ apikey 헤더 값이 올바르지 않아 생략합니다: {}", e);
+                }
+            }
+        } else {
+            warn!("⚠️ BCR_API_ANON_KEY 미설정 — Supabase 게이트웨이가 401 을 반환할 수 있습니다");
+        }
 
         let client = Client::builder()
             .default_headers(headers)
