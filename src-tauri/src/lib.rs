@@ -221,9 +221,10 @@ pub fn run() {
         }
     }
 
+    // shell / opener 플러그인은 등록만 되어 있고 프런트·백엔드 어디서도 쓰지 않아 제거했다.
+    // 크롬 실행은 std::process::Command 로 직접 처리한다(webview_commands.rs).
+    // shell:allow-execute 는 Tauri 에서 가장 넓은 권한이라 미사용 상태로 두면 위험만 남는다.
     tauri::Builder::default()
-        .plugin(tauri_plugin_shell::init())
-        .plugin(tauri_plugin_opener::init())
         .setup(|app| {
             info!("📦 Setting up application...");
 

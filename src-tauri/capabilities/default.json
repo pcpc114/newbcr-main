@@ -24,8 +24,6 @@
     "core:window:allow-minimize",
     "core:window:allow-maximize",
     "core:window:allow-unminimize",
-    "core:window:allow-unmaximize",
-    "shell:allow-open",
-    "shell:allow-execute"
+    "core:window:allow-unmaximize"
   ]
 }
