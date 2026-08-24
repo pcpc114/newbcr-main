@@ -1,4 +1,4 @@
-//! Integrity verification module
+﻿//! Integrity verification module
 //!
 //! Verifies the application hasn't been tampered with
 
@@ -36,36 +36,4 @@ fn calculate_integrity_hash() -> u64 {
     env!("CARGO_PKG_VERSION").hash(&mut hasher);
 
     hasher.finish()
-}
-
-/// Verify critical function pointers haven't been hooked
-#[cfg(target_os = "windows")]
-pub fn check_api_hooks() -> bool {
-    // For now, we do a simple timing check
-    let start = std::time::Instant::now();
-
-    // Call some Windows APIs
-    unsafe {
-        #[link(name = "kernel32")]
-        extern "system" {
-            fn GetTickCount() -> u32;
-        }
-
-        let _ = GetTickCount();
-    }
-
-    let elapsed = start.elapsed();
-
-    // If API calls take too long, hooks might be present
-    if elapsed.as_micros() > 5000 {
-        tracing::warn!("IC3");
-        return false;
-    }
-
-    true
-}
-
-#[cfg(not(target_os = "windows"))]
-pub fn check_api_hooks() -> bool {
-    true
 }

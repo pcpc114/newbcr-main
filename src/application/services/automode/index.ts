@@ -34,14 +34,6 @@ export {
   type PatternPredictionConfig,
 } from './PatternPredictionService'
 
-// ==================== Orchestrator ====================
-export {
-  AutoModeOrchestrator,
-  getAutoModeOrchestrator,
-  resetAutoModeOrchestrator,
-  type IAutoModeOrchestrator,
-} from './AutoModeOrchestrator'
-
 // ==================== Repository ====================
 export {
   LocalStorageAutoModeRepository,
