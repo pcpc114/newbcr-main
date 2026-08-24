@@ -122,6 +122,35 @@ use std::path::PathBuf;
 use tauri::Manager;
 use tracing::info;
 
+/// 보안 검사 실패처럼 Tauri 창이 뜨기 전(또는 없이) 종료해야 할 때, 사용자에게
+/// 원인을 알리는 네이티브 대화상자. Windows 는 Win32 MessageBox, 그 외 플랫폼은
+/// stderr 출력으로 대체한다.
+#[cfg(not(debug_assertions))]
+#[allow(unused_variables)]
+fn show_blocking_message(title: &str, body: &str) {
+    #[cfg(target_os = "windows")]
+    {
+        use windows::core::HSTRING;
+        use windows::Win32::UI::WindowsAndMessaging::{
+            MessageBoxW, MB_ICONERROR, MB_OK, MB_SYSTEMMODAL,
+        };
+        // SAFETY: MessageBoxW 는 UTF-16 널종단 문자열을 요구한다. HSTRING 이 이를 보장한다.
+        unsafe {
+            MessageBoxW(
+                None,
+                &HSTRING::from(body),
+                &HSTRING::from(title),
+                MB_OK | MB_ICONERROR | MB_SYSTEMMODAL,
+            );
+        }
+    }
+
+    #[cfg(not(target_os = "windows"))]
+    {
+        eprintln!("{title}: {body}");
+    }
+}
+
 /// Initialize and run the Tauri application
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
@@ -208,15 +237,16 @@ pub fn run() {
     }
 
     // Security checks (release mode only)
+    //
+    // 이전에는 검사 실패 시 `tracing::error!("E01")` 만 남기고 곧바로 종료했다.
+    // 릴리스 빌드에는 콘솔이 없어서 사용자에게는 "아이콘을 눌러도 아무 일도 안 일어남"
+    // 으로만 보였다. 이제 원인(BlockReason)에 맞는 안내를 네이티브 대화상자로 띄운 뒤
+    // 종료한다. (integrity 검사는 항상 통과하는 무의미한 코드라 제거됨 — security/mod.rs 참고)
     #[cfg(not(debug_assertions))]
     {
-        if !security::anti_debug::run_security_checks() {
-            tracing::error!("E01");
-            std::process::exit(1);
-        }
-
-        if !security::integrity::verify_integrity() {
-            tracing::error!("E02");
+        if let Some(reason) = security::anti_debug::run_security_checks() {
+            tracing::error!("{}", reason.code());
+            show_blocking_message("SmartHelper", reason.user_message());
             std::process::exit(1);
         }
     }

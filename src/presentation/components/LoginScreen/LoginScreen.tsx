@@ -283,7 +283,7 @@ export default function LoginScreen({ onLogin, isLoading: propIsLoading }: Login
         </form>
 
         <div className="login__footer">
-          <span>SmartHelper v2.0</span>
+          <span>SmartHelper v{__APP_VERSION__}</span>
           <span className="login__footer-dot">·</span>
           <span>Intelligent Assistant</span>
         </div>

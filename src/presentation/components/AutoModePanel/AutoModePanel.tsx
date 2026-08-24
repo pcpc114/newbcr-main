@@ -23,7 +23,8 @@ import CustomStrategyService from '../../../application/services/CustomStrategyS
 import VirtualBettingService from '../../../application/services/VirtualBettingService'
 import type { AutoModeBetLogEvent } from '../../../application/services/AutoModeService'
 import type { RoomFilterType, RoomSortType, CustomPattern } from '../../../domain/entities'
-import { SORT_OPTIONS, TIE_PAYOUT_MULTIPLIER } from '../../../domain/entities'
+import { SORT_OPTIONS } from '../../../domain/entities'
+import { winProfit } from '../../../domain/betting/payout'
 import './AutoModePanel.css'
 import {
   LayoutGrid,
@@ -217,9 +218,13 @@ export default function AutoModePanel({ onLogout, sessionWarning, isOnline, onHo
       if (state.waitingForResult && state.lastBetAmount > 0) {
         bettingRoomCount++
         totalCurrentBet += state.lastBetAmount
+        // 배당 계산은 domain/betting/payout.ts 단일 정책을 따른다.
+        // 예전엔 여기서만 0.95 를 하드코딩하고 Math.floor 를 써서, 헤더의 "예상 수익"이
+        // 실제 정산액과 어긋났다(수수료 상수도 두 군데 존재했다).
         const predType = state.lastPrediction?.prediction
-        const profitRate = predType === 'B' ? 0.95 : predType === 'T' ? TIE_PAYOUT_MULTIPLIER : 1.0
-        totalExpectedProfit += Math.floor(state.lastBetAmount * profitRate)
+        if (predType === 'B' || predType === 'P' || predType === 'T') {
+          totalExpectedProfit += winProfit(predType, state.lastBetAmount)
+        }
       }
     })
 

@@ -16,6 +16,36 @@ function sanitizeErrorMessage(message: string): string {
   const ipPattern = /\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}(:\d+)?/g
   return message.replace(urlPattern, '[주소]').replace(ipPattern, '[서버]')
 }
+
+/**
+ * 이미 사용자에게 토스트로 알린 로그인 오류.
+ *
+ * handleLogin 은 실패 분기에서 showError 로 알린 뒤 throw 해서 LoginScreen 에
+ * 실패를 전달한다. 그런데 그 throw 를 자기 catch 가 다시 잡아 showError 를 한 번
+ * 더 호출하는 바람에 토스트가 두 번 떴다(요금제 만료의 경우 두 번째는 코드까지
+ * AUTH_FAILED 로 잘못 붙었다). 이 표식으로 중복 표시를 막는다.
+ */
+class ReportedLoginError extends Error {
+  readonly alreadyReported = true
+
+  constructor(message: string) {
+    super(message)
+    this.name = 'ReportedLoginError'
+  }
+}
+
+function isAlreadyReported(error: unknown): boolean {
+  return error instanceof Error && (error as Partial<ReportedLoginError>).alreadyReported === true
+}
+
+/**
+ * LoginScreen 은 이 페이로드를 JSON.parse 해서 downloadUrl 을 꺼내 업데이트를 받는다.
+ * sanitizeErrorMessage 를 태우면 URL 이 '[주소]' 로 치환돼 다운로드가 깨지므로,
+ * 이 메시지만은 원문 그대로 넘겨야 한다.
+ */
+function isVersionMismatchPayload(message: string): boolean {
+  return message.includes('"type":"version_mismatch"')
+}
 import { EvolutionAdapter } from './infrastructure/adapters/EvolutionAdapter'
 import { SoundManager } from './infrastructure/utils/SoundManager'
 import { SessionService } from './application/services/SessionService'
@@ -128,7 +158,7 @@ function App() {
           setTimeout(() => {
             invoke('exit_app').catch(console.error)
           }, 3000)
-          throw new Error('요금제가 만료되었습니다.')
+          throw new ReportedLoginError('요금제가 만료되었습니다.')
         }
 
         setUser(result.user)
@@ -153,18 +183,29 @@ function App() {
           setTimeout(() => {
             invoke('exit_app').catch(console.error)
           }, 3000)
-          throw new Error('요금제가 만료되었습니다.')
+          throw new ReportedLoginError('요금제가 만료되었습니다.')
         }
 
         showError('AUTH_FAILED', safeMessage)
-        throw new Error(safeMessage)
+        throw new ReportedLoginError(safeMessage)
       }
     } catch (error) {
-      // ✅ Security: 에러 메시지에서 URL 제거
       const rawMessage = error instanceof Error ? error.message : '로그인에 실패했습니다.'
+
+      // 버전 불일치 페이로드는 LoginScreen 이 파싱해 쓰므로 원문 그대로 전달한다.
+      if (isVersionMismatchPayload(rawMessage)) {
+        throw error instanceof Error ? error : new Error(rawMessage)
+      }
+
+      // ✅ Security: 에러 메시지에서 URL 제거
       const safeMessage = sanitizeErrorMessage(rawMessage)
-      showError('AUTH_FAILED', safeMessage)
-      throw error instanceof Error ? new Error(safeMessage) : new Error(safeMessage)
+
+      // 위 분기에서 이미 토스트를 띄웠다면 다시 띄우지 않는다.
+      if (!isAlreadyReported(error)) {
+        showError('AUTH_FAILED', safeMessage)
+      }
+
+      throw new Error(safeMessage)
     } finally {
       setIsLoading(false)
     }
