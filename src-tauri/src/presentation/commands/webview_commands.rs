@@ -2445,19 +2445,35 @@ async fn monitor_page_continuously(
         return false;
       }
       
-      // 모든 버튼 정보 로깅 (1회만)
+      // 🔍 [BCR-DIAG] 멀티플레이 버튼 자동 클릭이 안 될 때, 실제 화면에 무엇이 렌더됐는지
+      //    1회 덤프한다. Evolution UI 변경·iframe 격리 여부를 코드 추측 없이 실측하기 위함.
+      //    ⚠️ 반드시 인자 1개(문자열 이어붙이기)로 찍을 것 — CDP 콘솔 브리지가 console.log 의
+      //       첫 인자만 캡처해서, 예전 쉼표-여러-인자 방식은 role/aria/class/text 가 전부
+      //       유실됐다(로그에 '[BCR] BTN ' 만 남았던 원인). 읽기 전용.
       if (!logged && attempts === 7) {
         logged = true;
-        var btns = document.querySelectorAll('button');
-        console.log('[BCR] === ALL BUTTONS ===', btns.length);
-        btns.forEach(function(b, i) {
-          console.log('[BCR] BTN', i, ':', 
-            'role=' + b.getAttribute('data-role'),
-            'aria=' + b.getAttribute('aria-label'),
-            'class=' + (b.className||'').substring(0,40),
-            'text=' + (b.textContent||'').substring(0,30)
-          );
-        });
+        try {
+          var cn = function(el){ try { return (el.className && el.className.baseVal !== undefined ? el.className.baseVal : (el.className || '')).toString().slice(0,70); } catch(_) { return ''; } };
+          console.log('[BCR-DIAG] url=' + location.href.slice(0,200));
+          console.log('[BCR-DIAG] hash=' + location.hash.slice(0,140));
+          var btns = document.querySelectorAll('button');
+          console.log('[BCR-DIAG] button count=' + btns.length);
+          for (var bi = 0; bi < btns.length && bi < 60; bi++) {
+            var b = btns[bi];
+            console.log('[BCR-DIAG] btn#' + bi + ' role="' + (b.getAttribute('data-role')||'') + '" aria="' + (b.getAttribute('aria-label')||'') + '" class="' + cn(b) + '" text="' + (b.textContent||'').trim().slice(0,30) + '"');
+          }
+          var multiEls = document.querySelectorAll('[class*="ulti" i],[data-role*="ulti" i],[aria-label*="ulti" i],[aria-label*="멀티"]');
+          console.log('[BCR-DIAG] multi-ish count=' + multiEls.length);
+          for (var mi = 0; mi < multiEls.length && mi < 25; mi++) {
+            var e = multiEls[mi];
+            console.log('[BCR-DIAG] multi#' + mi + ' tag=' + e.tagName + ' role="' + (e.getAttribute('data-role')||'') + '" aria="' + (e.getAttribute('aria-label')||'') + '" class="' + cn(e) + '"');
+          }
+          var ifr = document.querySelectorAll('iframe');
+          console.log('[BCR-DIAG] iframe count=' + ifr.length);
+          for (var fi = 0; fi < ifr.length && fi < 10; fi++) {
+            console.log('[BCR-DIAG] iframe#' + fi + ' src=' + (ifr[fi].getAttribute('src')||'').slice(0,120));
+          }
+        } catch(de) { console.log('[BCR-DIAG] dump error: ' + de.message); }
       }
       
       console.log('[BCR] 🎰 Step 2: Looking for multiplay button...');
@@ -2527,7 +2543,7 @@ async fn monitor_page_continuously(
       if (attempts <= 5) console.log('[BCR] ❌ Not found yet, attempt', attempts);
       return false;
     }
-    
+
     function loop() {
       if (done || isMultiMode() || attempts > 20) return;
       tryClick();
